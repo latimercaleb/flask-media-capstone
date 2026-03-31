@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from blog.core.views import core
 from blog.errors.handlers import errors
+from blog.users.views import users
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
@@ -18,6 +19,7 @@ db = SQLAlchemy(app)
 
 app.register_blueprint(core)
 app.register_blueprint(errors)
+app.register_blueprint(users)
 # Note setup vm (DONE)
 # Grab requirements.txt  (DONE)
 # Grab env file setup and add to gitignore (DONE)
