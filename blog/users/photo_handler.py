@@ -2,7 +2,7 @@ import os
 from  PIL import Image # Adjjust things to use Pillow for image processing
 from flask import current_app, url_for
 
-def add_profile_pic(pic_upload, username):
+def save_picture(pic_upload, username):
     filename = pic_upload.filename
     ext_type = filename.split('.')[-1]
     storage_filename = str(username) + '.' + ext_type
