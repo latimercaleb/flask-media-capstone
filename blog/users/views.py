@@ -2,7 +2,7 @@ from flask import render_template, request, Blueprint, url_for, redirect, flash,
 from flask_wtf import FlaskForm
 from flask_login import login_user, logout_user, login_required, current_user
 from blog import db, login_manager
-from blog.models import User
+from blog.models import User, Post
 from blog.users.forms import LoginForm, RegistrationForm, UpdateForm
 from blog.users.photo_handler import save_picture
 
@@ -56,8 +56,8 @@ def account():
 def user_posts(username):
     page = request.args.get('page',1,type=int) # Cycle through posts, pagination
     user = User.query.filter_by(username=username).first_or_404()
-    blog_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.date.desc()).paginate(page=page, per_page=5) # REview model and orm for pagination
-    return render_template('user_blog_posts.html', blog_posts = posts, author=user)
+    user_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.date.desc()).paginate(page=page, per_page=5) # TODO REview model and orm for pagination
+    return render_template('user_posts.html', blog_posts = posts, author=user)
 
 @users.route('/logout')
 def logout():
