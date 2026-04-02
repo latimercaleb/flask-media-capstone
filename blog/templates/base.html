@@ -1,0 +1,50 @@
+<!--TODO: Set up the basic HTML structure , and include nav bar here for home, about and login, logout dont forget block content-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Blog App</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">   
+    <body class="has-navbar-fixed-top">
+        <nav class="navbar is-fixed-top">
+            <div class="navbar-brand">
+                <span class="navbar-item">Placeholder</span>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="{{url_for('core.index')}}"> Home </a> 
+                    <a class="navbar-item" href="{{url_for('core.info')}}"> Info </a> 
+                    <!-- Logged in user links (placeholders) if current_user.is_authenticated-->
+                     
+                    <a class="navbar-item" href="#"> Log Out </a> 
+                    <a class="navbar-item" href="#"> Account </a> 
+                    <a class="navbar-item" href="#"> Add Post </a> 
+                     <!-- Logged out user links (placeholders) else but dont forget endif-->
+                    <a class="navbar-item" href="#"> Log In </a> 
+                    <a class="navbar-item" href="#"> Register </a> 
+                </div>
+            </div>
+        </nav>
+        <section class="section">
+            <div class="container">
+                <div class="card">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </section>
+    </body>
+    <script >
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                const $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+    </script>
+</html>

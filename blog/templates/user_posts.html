@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{%for post in posts.items %}
+    <h2><a href="link to post">{{post.title}}</a></h2>
+    Written By: <a href="author user name link">{{post.author.username}}</a>
+    <p>Published on: {{post.date.strftime("%Y=%m-%d")}}</p>
+    <br>
+{% endfor %}
+<!-- Add paginator for list item, disable the item for the page you are on, build a little navigation bar here to nav by page -->
+{% endblock %}
