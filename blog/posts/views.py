@@ -26,7 +26,7 @@ def render_posts(post_id):
     return render_template('single_post.html', post_details= user_post)
 
 # Update in prog
-@posts.route('/<int:post_id/update', methods=['GET', 'POST'])
+@posts.route('/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required
 def edit(post_id):
     user_post = Post.query.get_or_404(post_id)
@@ -45,7 +45,7 @@ def edit(post_id):
     return render_template('add_post.html', post_form=form)
 
 # Delete in prog
-@posts.route('/<int:post_id/delete', methods=['GET', 'POST'])
+@posts.route('/<int:post_id>/delete', methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
     user_post = Post.query.get_or_404(post_id)

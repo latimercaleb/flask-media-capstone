@@ -4,10 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
 
 base_dir = os.path.abspath(os.path.dirname(__file__))
 sKey = os.getenv('Secret_Key')
+print (sKey)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(base_dir, 'media-data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = sKey
