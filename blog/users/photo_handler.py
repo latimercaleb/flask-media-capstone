@@ -1,17 +1,17 @@
-import os 
-from  PIL import Image # Adjjust things to use Pillow for image processing
-from flask import current_app, url_for
+import os
+from  PIL import Image # TODO: Read a bit of the docs on this pckg
+from flask import current_app
 
-def save_picture(pic_upload, username):
-    filename = pic_upload.filename
+def save_photo(uploaded_photo, username):
+    filename = uploaded_photo.filename
     ext_type = filename.split('.')[-1]
     storage_filename = str(username) + '.' + ext_type
     filepath = os.path.join(current_app.root_path, 'static/profile_pics', storage_filename)
-    pic_upload.save(filepath)
+    uploaded_photo.save(filepath)
 
     output_size = (200, 200)
-    img = Image.open(pic_upload)
+    img = Image.open(uploaded_photo)
     img.thumbnail(output_size)
     img.save(filepath)
 
-    return url_for('static', filename='profile_pics/' + storage_filename)
+    return storage_filename

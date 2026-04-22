@@ -5,9 +5,9 @@ from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(user_id)
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin): # UserMixin required for auth
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     profile_pic = db.Column(db.String(64), default="default_pic.png", nullable=False)
@@ -27,6 +27,7 @@ class User(db.Model, UserMixin):
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
+        return
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -49,4 +50,4 @@ class Post(db.Model):
         self.user_id = user_id
 
     def __repr__(self):
-        return f'<Post {self.title} by User {self.user_id}>'
+        return f'<Post {self.title} by User {self.user_id}>' # Maybe self.writer.username instead? Give this a try

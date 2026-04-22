@@ -5,13 +5,19 @@ from blog.errors.handlers import errors
 from blog.users.views import users
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from dotenv import load_dotenv
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+
+base_dir = os.path.abspath(os.path.dirname(__file__))
+sKey = os.getenv('Secret_Key')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(base_dir, 'media-data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = sKey
+
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'users.login' # TODO need to make views for users.login
+login_manager.login_view = 'users.login' # TODO need to make view for users.login
 
 
 db = SQLAlchemy(app)
@@ -20,15 +26,19 @@ db = SQLAlchemy(app)
 app.register_blueprint(core)
 app.register_blueprint(errors)
 app.register_blueprint(users)
+
 # Note setup vm (DONE)
 # Grab requirements.txt  (DONE)
 # Grab env file setup and add to gitignore (DONE)
 # Test initial route setup for core cmp path (DONE)
+# Do db config setup, clone from prev project and adjust as needed (DONE)
+# Not bothering with migrations, just deleting  I've migrated enough (DONE)
+# Setup secret key, like actually (DONE)
+# Adjust db for using secret key config (DONE)
+# Check for pil install make sure its in requirements and imported correctly (DONE)
+# Get bulma imported properly into templates
 # Delete extra folders & unneeded files
-# Do db config setup, clone from prev project and adjust as needed
-# Not bothering with migrations, just deleting  I've migrated enough
-# Setup secret key, like actually
-# Adjust db for using secret key config
+# Finish writing out forms get all logic and validation tested
 
 '''
     Site test requirements:

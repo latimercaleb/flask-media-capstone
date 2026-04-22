@@ -1,9 +1,9 @@
-<!-- #TODO Finish up account template -->
+<!-- #TODO Finish up account template, add fluid to image profile pic, do finish form -->
 {% extends "base.html" %}
 {% block content %}
     <div class="container">
         <h1>Welcome in {{current_user.username}}</h1>
-        <img src="{{url_for('',)}}"/>
+        <img src="{{url_for('static', )}}"/>
     </div>
     <div>
         <!-- Form for account edit -->

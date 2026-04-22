@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from blog import db, login_manager
 from blog.models import User, Post
 from blog.users.forms import LoginForm, RegistrationForm, UpdateForm
-from blog.users.photo_handler import save_picture
+from blog.users.photo_handler import save_photo
 
 users = Blueprint('users', __name__)
 
@@ -16,6 +16,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
+            flash('Login successful!')
             next_page = request.args.get('next') # Grab the next page attempted
             return redirect(next_page) if next_page else redirect(url_for('core.index'))
     return render_template('login.html', login_form=form)
@@ -27,9 +28,10 @@ def register():
         user = User(email=form.email.data, username=form.username.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Registration successful.')
-        return redirect(url_for('users.login')) 
+        flash('Registration successful!')
+        return redirect(url_for('users.login'))
     return render_template('register.html', registration_form=form)
+
 @login_required
 @users.route('/account', methods=['GET', 'POST'])
 def account():
@@ -37,7 +39,7 @@ def account():
     if form.validate_on_submit():
         if form.picture.data:
             username = current_user.username
-            current_user.profile_pic  = save_picture(form.picture.data,username)
+            current_user.profile_pic  = save_photo(form.picture.data,username)
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()

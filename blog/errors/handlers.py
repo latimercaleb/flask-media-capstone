@@ -1,4 +1,3 @@
-# Error handling 
 from flask import render_template, Blueprint
 errors = Blueprint('errors', __name__)
 
