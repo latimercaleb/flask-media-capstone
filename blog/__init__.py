@@ -1,8 +1,5 @@
 import os
 from flask import Flask
-from blog.core.views import core
-from blog.errors.handlers import errors
-from blog.users.views import users
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from dotenv import load_dotenv
@@ -15,17 +12,22 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(base_dir, 'm
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = sKey
 
+db = SQLAlchemy(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'users.login' # TODO need to make view for users.login
 
 
-db = SQLAlchemy(app)
 
-
+from blog.core.views import core
+from blog.errors.handlers import errors
+from blog.users.views import users
+from blog.posts.views import posts
 app.register_blueprint(core)
 app.register_blueprint(errors)
 app.register_blueprint(users)
+app.register_blueprint(posts)
 
 # Note setup vm (DONE)
 # Grab requirements.txt  (DONE)
@@ -36,9 +38,12 @@ app.register_blueprint(users)
 # Setup secret key, like actually (DONE)
 # Adjust db for using secret key config (DONE)
 # Check for pil install make sure its in requirements and imported correctly (DONE)
-# Get bulma imported properly into templates
+# Get bulma imported properly into templates (DONE)
+# Review user_posts template and do paginator implementation (DONE)
+# Run db setup (should be configured need to try running it)
 # Delete extra folders & unneeded files
-# Finish writing out forms get all logic and validation tested
+# Finish writing out forms get all logic 
+# Form validation tested
 
 '''
     Site test requirements:
@@ -46,6 +51,7 @@ app.register_blueprint(users)
     - Fix all todo items first
     - Routes should work, log in and log out should work
     - Updating user profile and picture should work
+    - Add a default_pic.png to the folder
     - Be keen on profile pic integration, this part might get a little hairy
     - Include multi-part/form-type for image processing
 '''
