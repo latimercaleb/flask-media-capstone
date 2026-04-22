@@ -6,7 +6,7 @@ from datetime import datetime
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
-
+# Ref conflict in model with writer only one class needs to define the relationship here since one > many
 class User(db.Model, UserMixin): # UserMixin required for auth
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -40,8 +40,7 @@ class Post(db.Model):
     date= db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text, nullable=False)
-
-    writer=db.relationship('User', backref='posts', lazy=True)
+    # writer=db.relationship('User', backref='posts', lazy=True)
 
     def __init__(self, title, content, user_id):
         super().__init__()
@@ -50,4 +49,4 @@ class Post(db.Model):
         self.user_id = user_id
 
     def __repr__(self):
-        return f'<Post {self.title} by User {self.user_id}>' # Maybe self.writer.username instead? Give this a try
+        return f'<Post {self.title} by User {self.user_id}>'
