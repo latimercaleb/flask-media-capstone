@@ -1,11 +1,44 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
+<div class="card-header">
+	<p class="card-header-title">Account</p>
+</div>
+<div class="card-content">
+    <!-- TODO: Re-examine object structure, double check types being reffed, rework paginator the bulma way, do some text mods to the posts -->
+	<div class="content">
+		<h1>Welcome in {{author.username}}</h1>
+		<img
+			class="is-rounded image"
+			src="{{url_for('static', filename='profile_pics/' + author.profile_pic)}}" />
+		<section class="section">
+			{%for post in posts.items %}
+			<h2><a href="url_for('posts.user_post', user_post_id=post.id)">{{post.title}}</a></h2>
+			Written By:
+			<a href="url_for('users.user_post', username=post.writer.username)">
+                {{post.author.username}}
+            </a>
+			<p>Published on: {{post.date.strftime("%Y=%m-%d")}}</p>
+			<br />
+			<p>{{post.text}}</p>
+			<br />
+			{% endfor %}
+            <!-- Add paginator for list item, disable the item for the page you are on, build a little navigation bar here to nav by page -->
+            <nav>
+                <ul class="pagination justify">
+                    {% for page in posts.iter_pages(left_edge = 1, right_edge = 1, left_current = 2, right_current=2) %}
+                    {%if posts.page == page %}
+                    <li class="page-disabled">
+                        <a class="page-link" href="url_for('users.user_post', username=post.writer.username, page=page)">{{page}}</a>
+                    </li>
+                    {%else%}
+                    <li class="page">
+                        <a class="page-link" href="url_for('users.user_post', username=post.writer.username, page=page)">{{page}}</a>
+                    </li>
+                    {%endif%}
+                    {%endfor%}
+                </ul>
+            </nav>
+		</section>
+	</div>
+</div>
 
-{%for post in posts.items %}
-    <h2><a href="link to post">{{post.title}}</a></h2>
-    Written By: <a href="author user name link">{{post.author.username}}</a>
-    <p>Published on: {{post.date.strftime("%Y=%m-%d")}}</p>
-    <br>
-{% endfor %}
-<!-- Add paginator for list item, disable the item for the page you are on, build a little navigation bar here to nav by page -->
 {% endblock %}
