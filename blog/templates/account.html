@@ -1,11 +1,22 @@
 <!-- #TODO Finish up account template, add fluid to image profile pic, do finish form -->
 {% extends "base.html" %}
 {% block content %}
-    <div class="container">
+<div class="card-header">
+	<p class="card-header-title">Account</p>
+</div>
+<div class="card-content">
+	<div class="content">
         <h1>Welcome in {{current_user.username}}</h1>
-        <img src="{{url_for('static', )}}"/>
-    </div>
-    <div>
-        <!-- Form for account edit -->
-    </div>
+        <img class="is-rounded image" src="{{url_for('static', filename='profile_pics/' + current_user.profile_pic)}}"/>
+        <section class="section">
+
+        </section>
+	</div>
+</div>
 {% endblock %}
+
+  email = StringField('Email', validators=[DataRequired(), Email()])
+    username = StringField('Username', validators=[DataRequired()])
+    photo = FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png'], message='Invalid file type.')])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
+    submit = SubmitField('Update')
