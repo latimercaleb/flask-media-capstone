@@ -8,7 +8,6 @@ from blog.users.photo_handler import save_photo
 
 users = Blueprint('users', __name__)
 
-# TODO: Integrate routes for user controller flow
 @users.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -56,10 +55,10 @@ def account():
 @login_required
 @users.route('/<username>', methods=['GET', 'POST'])
 def user_posts(username):
-    page = request.args.get('page',1,type=int) # Cycle through posts, pagination
+    user_page = request.args.get('page',1,type=int) # Cycle through posts, pagination
     user = User.query.filter_by(username=username).first_or_404()
-    user_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.date.desc()).paginate(page=page, per_page=5) # TODO REview model and orm for pagination
-    return render_template('user_posts.html', blog_posts = posts, author=user)
+    user_posts = Post.query.filter_by(writer=user).order_by(Post.date.desc()).paginate(page=user_page, per_page=5) # TODO REview model and orm for pagination
+    return render_template('user_posts.html', posts = user_posts, author=user)
 
 @users.route('/logout')
 def logout():

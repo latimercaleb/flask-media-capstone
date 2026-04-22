@@ -1,22 +1,52 @@
 <!-- #TODO Finish up account template, add fluid to image profile pic, do finish form -->
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="card-header">
 	<p class="card-header-title">Account</p>
 </div>
 <div class="card-content">
 	<div class="content">
-        <h1>Welcome in {{current_user.username}}</h1>
-        <img class="is-rounded image" src="{{url_for('static', filename='profile_pics/' + current_user.profile_pic)}}"/>
-        <section class="section">
-
-        </section>
+		<h1>Welcome in {{current_user.username}}</h1>
+		<img
+			class="is-rounded image"
+			src="{{url_for('static', filename='profile_pics/' + current_user.profile_pic)}}" />
+		<section class="section">
+			<form
+				method="POST"
+				action="{{ url_for('users.account') }}"
+				enctype="multipart/form-data">
+				{{update_form.hidden_tag()}}
+				<div class="field">
+					<label class="label">{{update_form.email.label}}</label>
+					<div class="control has-icons-left">
+						{{update_form.email(class_="input is-medium is-rounded")}}
+						<span class="icon is-small is-left">
+							<i class="fas fa-envelope"></i>
+						</span>
+					</div>
+				</div>
+				<div class="field">
+					<label class="label">{{update_form.username.label}}</label>
+					<div class="control has-icons-left">
+						{{update_form.username(class_="input is-medium is-rounded")}}
+						<span class="icon is-small is-left">
+							<i class="fas fa-envelope"></i>
+						</span>
+					</div>
+				</div>
+				<div class="field">
+					<label class="label">{{update_form.photo.label}}</label>
+					<div class="control has-icons-left">
+						{{update_form.photo(class_="input is-medium is-rounded")}}
+						<span class="icon is-small is-left">
+							<i class="fas fa-envelope"></i>
+						</span>
+					</div>
+				</div>
+				<div class="control">
+					<button class="button is-info is-light">{{update_form.submit.label}}</button>
+				</div>
+			</form>
+		</section>
 	</div>
 </div>
 {% endblock %}
-
-  email = StringField('Email', validators=[DataRequired(), Email()])
-    username = StringField('Username', validators=[DataRequired()])
-    photo = FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png'], message='Invalid file type.')])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
-    submit = SubmitField('Update')
