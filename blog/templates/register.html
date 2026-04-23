@@ -5,9 +5,7 @@
 </div>
 <div class="card-content">
 	<div class="content">
-		<form
-			action="{{ url_for('users.register') }}"
-			enctype="multipart/form-data">
+		<form method="POST">
 			{{registration_form.hidden_tag()}}
 			<div class="field">
 				<label class="label">{{registration_form.email.label}}</label>

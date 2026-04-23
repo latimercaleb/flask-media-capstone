@@ -41,7 +41,7 @@ app.register_blueprint(posts)
 # Check for pil install make sure its in requirements and imported correctly (DONE)
 # Get bulma imported properly into templates (DONE)
 # Review user_posts template and do paginator implementation (DONE)
-# Run db setup (should be configured need to try running it)
+# Run db setup (should be configured need to try running it, DONE)
 # Delete extra folders & unneeded files
 # Finish writing out forms get all logic 
 # Form validation tested

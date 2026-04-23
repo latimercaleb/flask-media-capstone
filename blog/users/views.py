@@ -10,20 +10,31 @@ users = Blueprint('users', __name__)
 
 @users.route('/login', methods=['GET', 'POST'])
 def login():
+    print("Reached 3")
     form = LoginForm()
     if form.validate_on_submit():
+        print("Reached 4")
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
             flash('Login successful!')
             next_page = request.args.get('next') # Grab the next page attempted
             return redirect(next_page) if next_page else redirect(url_for('core.index'))
+        else: 
+            flash('Login failed!')
+            print ("Reached 5") # Add redirect logic for login failure
     return render_template('login.html', login_form=form)
 
 @users.route('/register', methods=['GET', 'POST'])
 def register():
+    # 2 problems, 1 form object is coming over incorrectly (probably because of action? Nope it was validator)
+    # 2. Logging in triggers error Exception: Install 'email_validator' for email validation support.
+    print("Reached")
     form = RegistrationForm()
+    print(form.validate_on_submit())
+    print(form.data) # {'email': None, 'username': None, 'password': None, 'confirm_password': None, 'submit': False, 'csrf_token': None}
     if form.validate_on_submit():
+        print("Reached 2")
         user = User(email=form.email.data, username=form.username.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -36,7 +47,7 @@ def register():
 def account():
     form = UpdateForm()
     if form.validate_on_submit():
-        if form.picture.data:
+        if form.photo.data:
             username = current_user.username
             current_user.profile_pic  = save_photo(form.picture.data,username)
         current_user.username = form.username.data
