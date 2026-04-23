@@ -49,7 +49,7 @@ def account():
     if form.validate_on_submit():
         if form.photo.data:
             username = current_user.username
-            current_user.profile_pic  = save_photo(form.picture.data,username)
+            current_user.profile_pic  = save_photo(form.photo.data,username)
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()

@@ -48,11 +48,11 @@ app.register_blueprint(posts)
 
 '''
     Site test requirements:
-    - At this point work on testing site behavior before implementing the posts section and do some bug fixes
-    - Fix all todo items first
-    - Routes should work, log in and log out should work
-    - Updating user profile and picture should work
+    - At this point work on testing site behavior before implementing the posts section and do some bug fixes (DONE)
+    - Routes should work, log in and log out should work (DONE)
+    - Include multi-part/form-type for image processing (DONE)
+    - Fix all todo items first 
+    - Updating user profile and picture should work (DONE BUT default picture needs to be adjusted via styles START HERE IN THE MORNING!)
     - Add a default_pic.png to the folder
     - Be keen on profile pic integration, this part might get a little hairy
-    - Include multi-part/form-type for image processing
 '''
